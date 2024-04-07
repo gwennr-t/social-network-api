@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 
+// Schema to create a User model
 const userSchema = new Schema(
     {
         username: {
@@ -12,7 +13,7 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            // Must match a valid email address (look into Mongoose's matching validation)
+            match: [/.+@.+\..+/, 'Please enter a valid email address'],
         },
         thoughts: [
             {

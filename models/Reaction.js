@@ -1,15 +1,16 @@
 const { Schema, model } = require('mongoose');
 
+// Reaction schema - will not be model
 const reactionSchema = new Schema (
     {
         reactionId: {
-            // Use Mongoose's ObjectId data type
-            // Default value is set to a new ObjectId
+            type: Schema.Types.ObjectId,
+            default: () => new Schema.Types.ObjectId()
         },
         reactionBody: {
             type: String,
             required: true,
-            // 280 character maximum
+            maxlength: 280,
         },
         username: {
             type: String,
@@ -18,9 +19,14 @@ const reactionSchema = new Schema (
         createdAt: {
             type: Date,
             default: Date.now,
-            // Use a getter method to format the timestamp on query
         }
-    }
+    },
+    {
+        toJSON: {
+          getters: true,
+        },
+        id: false,
+      }
 );
 
 const Reaction = model('reaction', reactionSchema);
